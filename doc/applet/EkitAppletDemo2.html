@@ -1,0 +1,55 @@
+<!-- Document Author - Thomas Gauweiler (gauweiler@fzi.de) -->
+<HTML>
+<HEAD>
+<TITLE>Ekit Applet Demo</TITLE>
+</HEAD>
+<BODY>
+<H1>Ekit Applet Demo</H1>
+<BR>
+<SCRIPT LANGUAGE="JavaScript">
+    var _info = navigator.userAgent;
+    var _ns = false;
+    var _ie = (_info.indexOf("MSIE") > 0 && _info.indexOf("Win") > 0 && _info.indexOf("Windows 3.1") < 0);
+	function copyEntry()
+    {
+		if (_ie == true) {
+			document.Formular.EkitH.innerText = document.Ekit.getDocumentText();
+			return true;
+		} else if (_ns == true) {
+			alert("hi ns");
+			document.Formular.EkitH.innerText = document.Ekit.getDocumentText();
+			alert(document.Ekit.getDocumentText());
+			alert(document.Formular.EkitH.value);
+			return true;
+		} else {
+			alert("hi else");
+			document.Formular.EkitH.value = document.Ekit.getDocumentText();
+			alert(document.Ekit.getDocumentText());
+			alert(document.Formular.EkitH.value);
+			return true;
+		}
+	}
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript1.1">
+    var _ns = (navigator.appName.indexOf("Netscape") >= 0 && ((_info.indexOf("Win") > 0 && _info.indexOf("Win16") < 0 && java.lang.System.getProperty("os.version").indexOf("3.5") < 0) || (_info.indexOf("Sun") > 0) || (_info.indexOf("Linux") > 0)));
+</SCRIPT>
+<FORM NAME="Formular" METHOD="POST" ACTION="ShowAppletOutput.php" onSubmit="return copyEntry()">
+<SCRIPT LANGUAGE="JavaScript">
+    if      (_ie == true) document.writeln('<OBJECT ID="Ekit" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" WIDTH="500" HEIGHT="400" codebase="http://java.sun.com/products/plugin/1.3/jinstall-13-win32.cab#Version=1,3,0,0"><NOEMBED><XMP>');
+    else if (_ns == true) document.writeln('<EMBED NAME="Ekit" type="application/x-java-applet;version=1.3" CODE="com.hexidec.ekit.EkitApplet.class" ARCHIVE="ekitapplet.jar" WIDTH="500" HEIGHT="400" DOCUMENT="<html><head></head><body><P><B>Embedded Document</B></P><P>This is an <I>embedded</I> test parameter formatted as an <U>HTML</U> document.<P><IMG SRC=' + "'" + "images/bee1.gif" + "'" + '></body></html>" pluginspage="http://java.sun.com/products/plugin/1.3/plugin-install.html"><NOEMBED><XMP>');
+</SCRIPT>
+<APPLET CODE="com.hexidec.ekit.EkitApplet.class" ARCHIVE="ekitapplet.jar" NAME="Ekit" WIDTH="500" HEIGHT="400"></XMP>
+	<PARAM NAME="code" VALUE="com.hexidec.ekit.EkitApplet.class">
+	<PARAM NAME="archive" VALUE="ekitapplet.jar">
+	<PARAM NAME="type" VALUE="application/x-java-applet;version=1.3">
+	<PARAM NAME="scriptable" VALUE="true">
+	<PARAM NAME="DOCUMENT" VALUE="<html><head></head><body><P><B>Embedded Document</B></P><P>This is an <I>embedded</I> test parameter formatted as an <U>HTML</U> document.<P><IMG SRC='images/bee1.gif'></body></html>">
+</APPLET>
+</NOEMBED></EMBED></OBJECT>
+<BR>
+<INPUT NAME="EkitH" TYPE="hidden" VALUE="hello, this is the unchanged variable EkitH">
+<INPUT TYPE="button" VALUE="Test" onClick="copyEntry()">
+<INPUT TYPE="submit">
+</FORM>
+</BODY>
+</HTML>

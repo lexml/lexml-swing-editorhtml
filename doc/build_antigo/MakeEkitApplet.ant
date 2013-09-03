@@ -1,0 +1,38 @@
+<project name="EkitApplet" default="fullbuild" basedir=".">
+	<property name="packagedir" location="com/hexidec"/>
+	<target name="initialise">
+		<delete file="ekitapplet.jar"/>
+		<delete>
+			<fileset dir="${packagedir}/ekit/" includes="**/*.class"/>
+		</delete>
+		<delete file="${packagedir}/util/Translatrix.class"/>
+	</target>
+	<target name="compile" description="Compile code">
+		<javac compiler="modern">
+			<src path="${packagedir}"/>
+			<include name="util/Base64Codec.java"/>
+			<include name="util/Translatrix.java"/>
+			<include name="ekit/action/*.java"/>
+			<include name="ekit/component/*.java"/>
+			<include name="ekit/EkitCore.java"/>
+			<include name="ekit/EkitApplet.java"/>
+		</javac>
+	</target>
+	<target name="distribute" depends="compile" description="Jar code and ancillary files">
+		<jar
+			destfile="ekitapplet.jar"
+			basedir="."
+			includes="com/hexidec/ekit/*.class,com/hexidec/ekit/action/*.class,com/hexidec/ekit/component/*.class,com/hexidec/ekit/icons/*.png,com/hexidec/ekit/icons/*.gif,com/hexidec/ekit/*.properties,com/hexidec/util/Base64Codec.class,com/hexidec/util/Translatrix.class"/>
+		<chmod file="ekitapplet.jar" perm="755"/>
+	</target>
+	<target name="cleanup" description="Delete classes">
+		<delete>
+			<fileset dir="${packagedir}/ekit/" includes="**/*.class"/>
+		</delete>
+		<delete file="${packagedir}/util/Base64Codec.class"/>
+		<delete file="${packagedir}/util/Translatrix.class"/>
+	</target>
+	<target name="fullbuild" depends="initialise,compile,distribute,cleanup">
+		<echo message="Full Build Complete"/>
+	</target>
+</project>

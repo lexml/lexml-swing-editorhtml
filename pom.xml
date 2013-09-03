@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.gov.lexml</groupId>
+		<artifactId>public-maven-parent</artifactId>
+		<version>0.0.2</version>
+	</parent>
+
+	<groupId>br.gov.lexml.swing</groupId>
+	<artifactId>lexml-swing-editorhtml</artifactId>
+	<version>0.0.16-SNAPSHOT</version>
+
+	<packaging>jar</packaging>
+
+	<name>lexml-swing-editorhtml</name>
+	<description>LexML - Componente Editor HTML para Swing</description>
+
+	<organization>
+		<name>Senado Federal</name>
+	</organization>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<svn.base>https://dsvp.senado.gov.br/svn/lexmltools/lexml-swing-editorhtml</svn.base>
+	</properties>
+
+	<scm>
+		<url>https://github.com/lexml/${project.artifactId}</url>
+		<developerConnection>scm:git:https://github.com/lexml/${project.artifactId}.git</developerConnection>
+		<connection>scm:git:https://github.com/lexml/${project.artifactId}.git</connection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArguments>
+						<g />
+						<deprecation />
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>			    
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.htmlcleaner</groupId>
+			<artifactId>htmlcleaner</artifactId>
+			<version>2.2</version>
+		</dependency>		
+	    <dependency>
+	      <groupId>net.sf.saxon</groupId>
+	      <artifactId>saxon</artifactId>
+	      <version>9.1.0.8</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>net.sf.saxon</groupId>
+	      <artifactId>saxon-dom</artifactId>
+	      <version>9.1.0.8</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>net.sf.saxon</groupId>
+	      <artifactId>saxon-xpath</artifactId>
+	      <version>9.1.0.8</version>
+	    </dependency>
+	    <dependency>
+			<groupId>br.gov.lexml.swing</groupId>
+			<artifactId>lexml-swing-spellchecker</artifactId>
+			<version>0.0.15</version>
+	    </dependency>
+	</dependencies>
+
+</project>
