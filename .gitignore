@@ -8,3 +8,8 @@
 /target
 /.settings
 /.classpath
+.idea/
+out/
+*.ipr
+*.iws
+*.iml
