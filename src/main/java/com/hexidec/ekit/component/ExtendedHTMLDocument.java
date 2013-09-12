@@ -406,6 +406,7 @@ public class ExtendedHTMLDocument extends HTMLDocument {
 		public void replace(FilterBypass fb, int offset, int length,
 				String text, AttributeSet attrs) throws BadLocationException {
 			dirty = true;
+			if (inlineEdit) text = text.replaceAll("(\\r|\\n)", " ");
 			new DocumentFilterChain(filters).replace(fb, offset, length, text, attrs);
 			edicaoControlada = false;
 		}
