@@ -110,6 +110,10 @@ public class ExtendedHTMLEditorKit extends HTMLEditorKit {
 			return;
 		}
 		
+		if (htmlDoc.isInlineEdit()) {
+            	    html = html.replaceAll("(\\r|\\n)", " ");
+        	}
+		
 		if (HTMLUtilities.isInline(html)) {
 			html = "<span>" + html + "</span>";
 			insertHTML((HTMLDocument) doc, pos, html, 0, 0, Tag.SPAN);
