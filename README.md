@@ -1,4 +1,4 @@
 lexml-swing-editorhtml
 ======================
 
-Edito HTML em Swing
+Editor HTML em Swing
