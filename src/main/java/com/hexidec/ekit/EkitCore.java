@@ -2455,7 +2455,21 @@ public class EkitCore extends JPanel implements ActionListener, KeyListener,
 				moveCaretOnTable(tdElement, false, ke.isShiftDown());
 				ke.consume();
 			}
-		} else if (keyCode == KeyEvent.VK_D && ke.isShiftDown() && ke.isControlDown()) {
+		} else if (keyCode == 10) {
+            		Element tdElement = DocumentUtil.getElementByTag(htmlDoc, jtpMain.getCaretPosition(), Tag.TD);
+            	    	// inside table
+            	    	if (tdElement != null) {
+                		try {
+                    	    		insertBreak();
+                		}
+                		catch (IOException e) {
+                    	    		e.printStackTrace();
+                		} catch (BadLocationException e) {
+                    	    		e.printStackTrace();
+                		}
+				ke.consume();           
+            	    	}
+        	} else if (keyCode == KeyEvent.VK_D && ke.isShiftDown() && ke.isControlDown()) {
 			debug();
 		}
 
