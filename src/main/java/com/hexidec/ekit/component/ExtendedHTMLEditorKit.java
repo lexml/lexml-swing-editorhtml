@@ -96,7 +96,7 @@ public class ExtendedHTMLEditorKit extends HTMLEditorKit {
 			BadLocationException {
 		String html = IOUtils.toString(in);
 		
-//		log.debug(str);
+//		log.debug("read [" + html + "]");
 
 		html = HTMLUtilities.preparaPaste(html);
 
@@ -110,11 +110,7 @@ public class ExtendedHTMLEditorKit extends HTMLEditorKit {
 			return;
 		}
 		
-		if (htmlDoc.isInlineEdit()) {
-            	    html = html.replaceAll("(\\r|\\n)", " ");
-        	}
-		
-		if (HTMLUtilities.isInline(html)) {
+		if (htmlDoc.isInlineEdit() || HTMLUtilities.isInline(html)) {
 			html = "<span>" + html + "</span>";
 			insertHTML((HTMLDocument) doc, pos, html, 0, 0, Tag.SPAN);
 		} else if(DocumentUtil.getElementByTag((HTMLDocument) doc, pos, Tag.TD) != null) {

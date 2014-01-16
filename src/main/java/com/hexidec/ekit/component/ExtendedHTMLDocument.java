@@ -289,7 +289,6 @@ public class ExtendedHTMLDocument extends HTMLDocument {
 		}
 
 		public void handleText(char[] data, int pos) {
-//			log.debug("handleText: " + new String(data));
 			// Corrige problema de colar caractere 0 no final
 			if(!(data.length == 1 && data[0] == 0)) {
 				reader.handleText(data, pos);
@@ -406,7 +405,9 @@ public class ExtendedHTMLDocument extends HTMLDocument {
 		public void replace(FilterBypass fb, int offset, int length,
 				String text, AttributeSet attrs) throws BadLocationException {
 			dirty = true;
-			if (inlineEdit) text = text.replaceAll("(\\r|\\n)", " ");
+			if (inlineEdit) {
+				text = text.replaceAll("[\\r\\n]", " ");
+			}
 			new DocumentFilterChain(filters).replace(fb, offset, length, text, attrs);
 			edicaoControlada = false;
 		}

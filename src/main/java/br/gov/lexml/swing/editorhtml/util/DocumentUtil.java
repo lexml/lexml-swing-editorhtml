@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTextPane;
-import javax.swing.SizeRequirements;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
 import javax.swing.text.MutableAttributeSet;
@@ -341,6 +340,25 @@ public class DocumentUtil {
 		
 		
 		return colgroups;
+	}
+
+	public static void percorreArvore(Element e, ElementVisitor visitor) {
+		
+		visitor.visit(e);
+		
+		if(!e.isLeaf()) {
+			int count = e.getElementCount();
+			for(int i = 0; i < count; i++) {
+				visitor.visit(e.getElement(i));
+			}
+		}
+		
+	}
+	
+	public static interface ElementVisitor {
+		
+		void visit(Element e);
+		
 	}
 
 }

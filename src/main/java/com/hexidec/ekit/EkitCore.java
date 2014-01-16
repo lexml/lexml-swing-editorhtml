@@ -2455,21 +2455,19 @@ public class EkitCore extends JPanel implements ActionListener, KeyListener,
 				moveCaretOnTable(tdElement, false, ke.isShiftDown());
 				ke.consume();
 			}
-		} else if (keyCode == 10) {
-            		Element tdElement = DocumentUtil.getElementByTag(htmlDoc, jtpMain.getCaretPosition(), Tag.TD);
-            	    	// inside table
-            	    	if (tdElement != null) {
-                		try {
-                    	    		insertBreak();
-                		}
-                		catch (IOException e) {
-                    	    		e.printStackTrace();
-                		} catch (BadLocationException e) {
-                    	    		e.printStackTrace();
-                		}
-				ke.consume();           
-            	    	}
-        	} else if (keyCode == KeyEvent.VK_D && ke.isShiftDown() && ke.isControlDown()) {
+		} else if (keyCode == KeyEvent.VK_ENTER) {
+			Element tdElement = DocumentUtil.getElementByTag(htmlDoc, jtpMain.getCaretPosition(), Tag.TD);
+			// inside table
+			if (tdElement != null) {
+				try {
+					insertBreak();
+				} catch (Exception e) {
+					log.error("Falha ao inserir quebra de linha.", e);
+				}
+				ke.consume();
+			}
+		} else if (keyCode == KeyEvent.VK_D && ke.isShiftDown()
+				&& ke.isControlDown()) {
 			debug();
 		}
 
@@ -2645,6 +2643,10 @@ public class EkitCore extends JPanel implements ActionListener, KeyListener,
 	private void insertBreak() throws IOException, BadLocationException,
 			RuntimeException {
 		int caretPos = jtpMain.getCaretPosition();
+		
+		log.debug("--------------- caretPos: " + caretPos);
+		DocumentUtil.debug(htmlDoc.getParagraphElement(caretPos));
+		
 		htmlKit.insertHTML(htmlDoc, caretPos, "<BR>", 0, 0, HTML.Tag.BR);
 		jtpMain.setCaretPosition(caretPos + 1);
 	}
