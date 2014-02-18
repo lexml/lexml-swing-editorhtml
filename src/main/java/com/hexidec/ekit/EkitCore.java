@@ -50,7 +50,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
@@ -92,8 +91,6 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
-import javax.swing.text.MutableAttributeSet;
-import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -2460,7 +2457,7 @@ public class EkitCore extends JPanel implements ActionListener, KeyListener,
 			// inside table
 			if (tdElement != null) {
 				try {
-					insertBreak();
+					insertBreakInsideTD(tdElement);
 				} catch (Exception e) {
 					log.error("Falha ao inserir quebra de linha.", e);
 				}
@@ -2644,13 +2641,45 @@ public class EkitCore extends JPanel implements ActionListener, KeyListener,
 			RuntimeException {
 		int caretPos = jtpMain.getCaretPosition();
 		
-		log.debug("--------------- caretPos: " + caretPos);
-		DocumentUtil.debug(htmlDoc.getParagraphElement(caretPos));
+//		log.debug("--------------- caretPos: " + caretPos);
+//		DocumentUtil.debug(htmlDoc.getParagraphElement(caretPos));
 		
 		htmlKit.insertHTML(htmlDoc, caretPos, "<BR>", 0, 0, HTML.Tag.BR);
 		jtpMain.setCaretPosition(caretPos + 1);
 	}
 
+	/**
+	 * Method for inserting a break (BR) element inside a table cell.
+	 */
+	private void insertBreakInsideTD(Element tdElement) throws IOException, BadLocationException, 
+			RuntimeException {
+		int caretPos = jtpMain.getCaretPosition();
+		
+//		log.debug("--------------- caretPos: " + caretPos);
+//		DocumentUtil.debug(tdElement);
+		
+		if(caretPos == tdElement.getStartOffset()) {
+			// Avoid inserting the break in the previous cell.
+			Element parent = htmlDoc.getParagraphElement(caretPos);
+			htmlDoc.insertAfterStart(parent, "<BR>");
+			if(parent == tdElement) {
+				jtpMain.setCaretPosition(caretPos + 2);
+			}
+			else {
+				jtpMain.setCaretPosition(caretPos + 1);
+			}
+			return;
+		}
+		
+		htmlKit.insertHTML(htmlDoc, caretPos, "<BR>", 0, 0, HTML.Tag.BR);
+		jtpMain.setCaretPosition(caretPos + 1);
+		
+//		caretPos = jtpMain.getCaretPosition();
+//		log.debug("--------------- depois: " + caretPos);
+//		DocumentUtil.debug(tdElement);
+		
+	}
+	
 	/**
 	 * Method for inserting a horizontal rule (HR) element
 	 */

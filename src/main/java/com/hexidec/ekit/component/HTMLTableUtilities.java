@@ -42,7 +42,9 @@ public class HTMLTableUtilities {
 			"(</?)th(.*?>)", 
 			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	
-	
+	private static final Pattern pFimDeTDnaoPrecedidoDeBR = Pattern.compile(
+			"(?<!<br/>)(</td\\b)", 
+			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	
 	private static String converteTHemTD(String str) {
 		
@@ -113,7 +115,27 @@ public class HTMLTableUtilities {
 		// Converte TH em TD
 		str = HTMLTableUtilities.converteTHemTD(str);
 		
+		// Adiciona br ao final das células
+		str = HTMLTableUtilities.adicionaBRnoFimDosTD(str);
+		
 		return str;
+	}
+
+	private static String adicionaBRnoFimDosTD(String str) {
+		
+		Matcher m = pFimDeTDnaoPrecedidoDeBR.matcher(str);
+		if(!m.find()) {
+			return str;
+		}
+	
+		StringBuffer sb = new StringBuffer();
+		do {
+			m.appendReplacement(sb, "<br/>" + Matcher.quoteReplacement(m.group()));
+		} while(m.find());
+		
+		m.appendTail(sb);
+		
+		return sb.toString();
 	}
 	
 //	public static void main(String[] args) {

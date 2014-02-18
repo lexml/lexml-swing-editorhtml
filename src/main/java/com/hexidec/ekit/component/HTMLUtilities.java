@@ -655,6 +655,8 @@ public class HTMLUtilities {
 		// Retira valign="top" dos td
 		html = html.replace("td valign=\"top\"", "td");
 		
+		html = html.replaceAll("<br/>\\s*(</(?:td|p)\\b)", "$1");
+		
 		if(!colgroups.isEmpty()) {
 			html = addColgroups(html, colgroups);
 		}
